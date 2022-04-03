@@ -1,9 +1,11 @@
-import re
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from hashlib import sha512
 
 debug = False
+
+def generate_keyPair():
+    return RSA.generate(1024)
 
 def encrypt(message, pubKey):
     encryptor = PKCS1_OAEP.new(pubKey)

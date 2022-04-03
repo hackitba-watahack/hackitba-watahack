@@ -5,7 +5,7 @@ from pydrive.drive import GoogleDrive
 folder_name = "watahack_folder1"
 local_file_name = "test_local_file.txt"
 
-debug = True
+debug = False
 
 def init_module():
     gauth = GoogleAuth()
@@ -23,6 +23,16 @@ def open_folder(drive,folder_name):
             return file
     return 0
 
+def open_sub_folder(drive,folder,subfolder_name):
+    fileList = drive.ListFile({'q': "'%s' in parents and trashed=false"%(folder['id']),
+    'corpora':'allDrives',
+    'includeItemsFromAllDrives':True,
+    'supportsAllDrives':True}).GetList()
+    for file in fileList:
+        if(file['title'] == subfolder_name):
+            return file
+    return 0
+
 def create_file_from_local(drive, folder, local_file_name):
     file = drive.CreateFile({"parents": [{"kind": "drive#fileLink", "id": folder['id']}]})
     file.SetContentFile(local_file_name)
@@ -36,12 +46,23 @@ def get_list_from_folder(drive, folder):
   'includeItemsFromAllDrives': True
 }).GetList()
 
+def get_file_from_folder(drive, folder, file_name):
+    list = get_list_from_folder(drive,folder)
+    for file in list:
+        if(file['title'] == file_name):
+            return file
+    return 0
+
 def download_file(drive, file, local_name):
     local_file = drive.CreateFile({'id':file['id']})
     local_file.GetContentFile(local_name)
 
 def change_content_from_string(file, string):
     file.SetContentString(string)
+    file.Upload()
+
+def change_content_from_file(file, local_name):
+    file.SetContentFile(local_name)
     file.Upload()
 
 if debug:

@@ -34,15 +34,15 @@ while(current_state != state.EXIT):
         if file_ != 0:
             download_file(drive,file_,"NewReg")
             newreg = file_to_var("NewReg")
-            if validate_register(newreg) and not is_register_on_block_chain(newreg,block_chain):
+            if validate_register(newreg):# and not is_register_on_block_chain(newreg,block_chain):
                 block_chain.append(newreg)
                 var_to_file(block_chain,"my_block_chain")
                 change_content_from_file(BC_file,"my_block_chain")
                 print("New register verified!!!")
 
                 create_file_from_local(drive,peer_folder,"NewReg")
-            elif is_register_on_block_chain(newreg,block_chain):
-                print("Register already on BlockChain")
+            #elif is_register_on_block_chain(newreg,block_chain):
+            #    print("Register already on BlockChain")
             else:
                 print("Fraudulent register detected")
             file_.Delete()

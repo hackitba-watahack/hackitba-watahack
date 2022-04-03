@@ -3,7 +3,7 @@ from file_manager import var_to_file, file_to_var, key_to_file, file_to_key
 from encrypting import generate_keyPair, encrypt, desencrypt, sign, verify
 from enum import Enum
 
-debug = False
+debug = True
 
 class regType(Enum):
     REGULAR = 0
@@ -77,13 +77,11 @@ def make_new_history(client_private_key, doctor_private_key, block_chain):
     client_enc = encrypt_and_sign(new_message, client_private_key)
     return (regType.NEW_DOC,doctor_enc,client_enc)
 
-def is_register_on_block_chain(register,block_chain):
-    answer = False
-    for reg in block_chain:
-        if reg == register:
-            answer = True
-            break
-    return answer
+#def is_register_on_block_chain(register,block_chain):
+#    for reg in block_chain:
+#        if reg == register:
+#            return True
+#    return False
 
 
 if debug:
@@ -97,20 +95,24 @@ if debug:
 
 
     ##   CREAR UNA BLOCKCHAIN A PARTIR DE REGISTROS (siendo el hospital)
-    #drive = init_module()
-    #main_folder = open_folder(drive,"watahack_folder1")
-    #hospital_folder = open_sub_folder(drive, main_folder, "Node_1")
+    drive = init_module()
+    main_folder = open_folder(drive,"watahack_folder1")
+    hospital_folder = open_sub_folder(drive, main_folder, "Node_1")
     
-    #my_block_chain = []
+    my_block_chain = []
 
-    #my_block_chain.append(make_new_register("PRIMER REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_0")))
-    #my_block_chain.append(make_new_register("SEGUNDO REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_1")))
-    #my_block_chain.append(make_new_register("TERCER REGISTRO",file_to_key("doctor_key_1"),file_to_key("client_key_1")))
-    #my_block_chain.append(make_new_register("CUARTO REGISTRO",file_to_key("doctor_key_1"),file_to_key("client_key_3")))
-    #my_block_chain.append(make_new_register("QUINTO REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_0")))
+    my_block_chain.append(make_new_register("PRIMER REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_0")))
+    my_block_chain.append(make_new_register("SEGUNDO REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_1")))
+    my_block_chain.append(make_new_register("TERCER REGISTRO",file_to_key("doctor_key_1"),file_to_key("client_key_1")))
+    my_block_chain.append(make_new_register("CUARTO REGISTRO",file_to_key("doctor_key_1"),file_to_key("client_key_3")))
+    my_block_chain.append(make_new_register("QUINTO REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_0")))
 
-    #var_to_file(my_block_chain,"my_block_chain")
-    #create_file_from_local(drive,hospital_folder,"my_block_chain")
+    ##new_thingy = make_new_register("PRIMER REGISTRO",file_to_key("doctor_key_0"),file_to_key("client_key_0"))
+    
+    #print(is_register_on_block_chain(new_thingy),my_block_chain)
+
+    var_to_file(my_block_chain,"my_block_chain")
+    create_file_from_local(drive,hospital_folder,"my_block_chain")
 
     ##   (siendo el medico) COPIANDO DATOS DEL HOSPITAL, PARA VER DATOS DE UN PACIENTE
     #drive = init_module()

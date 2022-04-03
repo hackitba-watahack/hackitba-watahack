@@ -38,7 +38,7 @@ def create_file_from_local(drive, folder, local_file_name):
     file.SetContentFile(local_file_name)
     file.Upload()
 
-
+ 
 def get_list_from_folder(drive, folder):
     return drive.ListFile({
   'q': "'%s' in parents and trashed=false" % folder['id'],
